@@ -1,0 +1,1860 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Finanzas PRO 💳</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+body{font-family:Arial;background:#f3e8ff;margin:0}
+
+.card{
+transition:0.3s;
+}
+
+.card:hover{
+transform:scale(1.02);
+}
+
+/* NAV */
+.nav{display:flex;background:#6c3483;color:white}
+.nav button{flex:1;padding:12px;border:none;background:none;color:white;font-weight:bold}
+
+.nav button{
+transition:0.2s;
+}
+
+.nav button:hover{
+background:rgba(255,255,255,0.2);
+}
+
+.nav button.active{
+background:rgba(255,255,255,0.3);
+border-bottom:3px solid white;
+}
+
+/* CARDS */
+.card{background:white;margin:10px;padding:15px;border-radius:16px;box-shadow:0 4px 10px rgba(0,0,0,0.1)}
+.hidden{display:none}
+
+/* INPUTS */
+input,select{width:100%;padding:10px;margin:5px 0;border-radius:8px;border:1px solid #ccc}
+
+/* BOTONES */
+button{padding:8px;margin:5px;background:#8e44ad;color:white;border:none;border-radius:8px}
+
+/* ITEMS */
+.item{
+background:#fafafa;
+padding:6px;
+margin:4px;
+border-radius:8px;
+font-size:13px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+/* RESUMEN */
+.resumen{display:flex;justify-content:space-between}
+.box{
+flex:1;
+margin:5px;
+padding:15px;
+border-radius:16px;
+color:white;
+text-align:center;
+font-weight:bold;
+}
+.ing{background:#27ae60}
+.gas{background:#c0392b}
+.sal{background:#8e44ad}
+
+/* TABLA */
+table{width:100%;border-collapse:collapse;margin-top:10px}
+th,td{border:1px solid #ddd;padding:6px;text-align:center}
+th{background:#e8d5ff}
+
+h2{font-size:28px}
+h3{color:#666;margin-top:-10px}
+
+#saldoDisponible{
+font-size:32px;
+font-weight:bold;
+}
+
+/* BOTONES PEQUEÑOS 💜 */
+.item button{
+padding:2px 6px;
+margin:2px;
+font-size:12px;
+border-radius:6px;
+}
+
+.item button:hover{
+opacity:0.8;
+transform:scale(1.05);
+}
+
+/* TRANSICIÓN SUAVE 💜 */
+.card{
+transition: all 0.3s ease;
+}
+
+.fade{
+opacity:0;
+transform:translateY(10px);
+}
+
+.fade.show{
+opacity:1;
+transform:translateY(0);
+}
+
+/* 💜 TARJETAS TIPO BANCO */
+.card{
+background: linear-gradient(135deg, #a78bfa, #cdb4ff);
+border-radius:20px;
+padding:20px;
+color:white;
+box-shadow:0 10px 30px rgba(0,0,0,0.2);
+transition: all 0.3s ease;
+}
+
+/* ✨ EFECTO HOVER */
+.card:hover{
+transform: translateY(-5px) scale(1.02);
+box-shadow:0 15px 40px rgba(0,0,0,0.3);
+}
+
+/* 💚 INGRESOS */
+.box.ing{
+background: linear-gradient(135deg, #2ecc71, #27ae60);
+border-radius:20px;
+padding:20px;
+color:white;
+transition:0.3s;
+}
+
+/* ❤️ GASTOS */
+.box.gas{
+background: linear-gradient(135deg, #e74c3c, #c0392b);
+border-radius:20px;
+padding:20px;
+color:white;
+transition:0.3s;
+}
+
+/* 💎 EFECTO HOVER PARA BOX */
+.box:hover{
+transform: scale(1.02);
+}
+
+/* 💜 TABLA PRO */
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:10px;
+background:white;
+border-radius:12px;
+overflow:hidden;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* ENCABEZADO */
+th{
+background:#a78bfa;
+color:white;
+padding:10px;
+text-align:left;
+}
+
+/* CELDAS */
+td{
+padding:10px;
+border-bottom:1px solid #eee;
+}
+
+/* ✨ EFECTO HOVER */
+tr:hover{
+background:#f3e8ff;
+transition:0.2s;
+}
+
+/* 💎 FILAS ALTERNADAS */
+tr:nth-child(even){
+background:#faf5ff;
+}
+
+button[onclick="activarNoGasto()"]{
+font-weight:bold;
+transition:0.2s;
+}
+
+button[onclick="activarNoGasto()"]:hover{
+transform:scale(1.02);
+box-shadow:0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* 💜 CORRECCIÓN TEXTO TABLAS */
+table{
+color:#333; /* texto oscuro */
+}
+
+td{
+color:#333 !important;
+}
+
+tr{
+color:#333;
+}
+
+/* SOLO encabezado en blanco */
+th{
+color:white;
+}
+
+#totalPresupuesto{
+color:#000;
+font-weight:bold;
+font-size:18px;
+margin-top:10px;
+}
+
+.nav{
+box-shadow:0 4px 15px rgba(0,0,0,0.1);
+}
+
+/* 💜 GRÁFICO IA MÁS PEQUEÑO */
+#graficoIA{
+max-width:300px;
+height:300px;
+margin:auto;
+display:block;
+}
+
+#boxGrafico{
+width:230px;
+height:230px;
+}
+
+#graficoGastos{
+width:100% !important;
+height:100% !important;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- LOGIN -->
+
+<div id="loginBox" class="card">
+<h3>🔒 PIN</h3>
+<input id="pin" type="password">
+<button onclick="loginApp()">Entrar</button>
+</div>
+
+<div id="appBox" class="hidden">
+
+<!-- RESUMEN BANCARIO -->
+
+<div class="card">
+<div class="resumen">
+<div class="box sal" style="box-shadow:0 8px 20px rgba(0,0,0,0.15)">
+
+<h4>💜 Saldo disponible</h4>
+<h2 id="saldoDisponible">Q0.00</h2>
+
+<h2 style="color:white;text-align:center;margin:0;">💜 Saldo Total</h2>
+
+<h3 id="saldoTotal" style="color:white;font-size:42px;font-weight:bold;text-align:center;text-shadow:0 2px 8px rgba(0,0,0,0.3);margin:0;">
+Q0.00
+</h3>
+
+</div>
+
+<div class="box ing" style="box-shadow:0 8px 20px rgba(0,0,0,0.15)">
+<h4>💰 Ingresos</h4>
+<h2 id="totalIngresos">Q0.00</h2>
+</div>
+
+<div class="box gas" style="box-shadow:0 8px 20px rgba(0,0,0,0.15)">
+<h4>💸 Gastos</h4>
+<h2 id="totalGastos">Q0.00</h2>
+</div>
+</div>
+
+<h3 id="ahorroBox">Ahorro: Q0.00 💜</h3>
+<select id="filtroFecha" onchange="aplicarFiltro()">
+<option value="todos">📅 Todo el historial</option>
+<option value="mes">📅 Este mes</option>
+<option value="anio">📅 Este año</option>
+</select>
+
+<input type="date" id="fechaDesde" onchange="aplicarFiltro()">
+
+<input type="date" id="fechaHasta" onchange="aplicarFiltro()">
+
+<input
+id="buscarMovimiento"
+placeholder="🔍 Buscar en toda la app..."
+onkeyup="aplicarFiltro()">
+
+<button onclick="cerrarSesion()">Cerrar sesión</button>
+
+<button onclick="exportarExcel()">
+📊 Exportar a Excel
+</button>
+</div>
+
+<!-- NAV -->
+
+<div class="nav">
+<button onclick="ver('ingresos')">💰 Ingresos</button>
+<button onclick="ver('gastos')">💸 Gastos</button>
+<button onclick="ver('dashboard')">🧠 IA</button>
+<button onclick="ver('presupuesto')">📊 Presupuesto</button>
+</div>
+
+<!-- INGRESOS -->
+
+<div id="ingresos" class="card">
+<h3>💰 Ingresos</h3>
+
+<input id="iConcepto" placeholder="Concepto">
+
+<select id="iCategoria" onchange="subIngreso()">
+<option value="">Categoría</option>
+<option value="salario">Salario</option>
+<option value="negocio">Negocio</option>
+<option value="freelance">Freelance</option>
+<option value="otros">Otros</option>
+</select>
+
+<select id="iSub"><option>Subcategoría</option></select>
+
+<input id="iMonto" type="number">
+<input id="iFecha" type="date">
+
+<button onclick="guardar('Ingreso')">Guardar</button>
+
+<h4>📊 Tabla de ingresos</h4>
+<table>
+<thead>
+<tr>
+<th>Concepto</th>
+<th>Categoría</th>
+<th>Monto</th>
+<th>Fecha</th>
+<th>Acciones</th>
+</tr>
+</thead>
+<tbody id="tablaIngresos"></tbody>
+</table>
+
+</div>
+
+<!-- GASTOS -->
+
+<div id="gastos" class="card hidden">
+<h3>💸 Gastos</h3>
+
+<input id="gConcepto" placeholder="Concepto">
+
+<select id="gCategoria" onchange="subGasto()">
+<option value="">Categoría</option>
+<option value="comida">Comida</option>
+<option value="transporte">Transporte</option>
+<option value="hogar">Hogar</option>
+<option value="salud">Salud</option>
+<option value="educacion">Educación</option>
+<option value="ocio">Ocio</option>
+<option value="antojos">🍩 Antojos</option>
+<option value="deudas">💳 Deudas</option>
+</select>
+
+<select id="gSub"><option>Subcategoría</option></select>
+
+<input id="gMonto" type="number">
+<input id="gFecha" type="date">
+
+<button onclick="guardar('Gasto')">Guardar</button>
+
+<div style="margin:10px 0;">
+  <button id="btnVistaGastos"
+          onclick="cambiarVistaGastos()"
+          style="
+            background:#8e44ad;
+            color:white;
+            border:none;
+            border-radius:10px;
+            padding:8px 15px;
+            cursor:pointer;
+          ">
+    👁️ Ver por categorías
+  </button>
+</div>
+<div id="vistaCategorias"></div>
+
+<h4 id="tituloTablaGastos">📊 Tabla de gastos</h4>
+<table id="tablaGastosCompleta">
+<thead>
+<tr>
+<th>Concepto</th>
+<th>Categoría</th>
+<th>Monto</th>
+<th>Fecha</th>
+<th>Acciones</th>
+</tr>
+</thead>
+<tbody id="tablaGastos"></tbody>
+</table>
+</div>
+
+<!-- IA -->
+
+<div id="dashboard" class="card hidden">
+<div id="boxGrafico">
+  <canvas id="graficoGastos"></canvas>
+</div>
+<h3>🧠 Inteligencia financiera</h3>
+<div id="alertas"></div>
+<div id="analisisGastos"></div>
+<div id="comparacionMensual"></div>
+<div id="enQueSeFue"></div>
+<div id="detectiveFinanciero"></div>
+</div>
+
+<!-- PRESUPUESTO -->
+
+<div id="presupuesto" class="card hidden">
+<h3>📊 Presupuesto</h3>
+
+<input id="pIConcepto" placeholder="Concepto">
+
+<select id="pICategoria" onchange="subPresupuestoIngreso()">
+<option value="">Categoría</option>
+<option value="salario">💼 Salario</option>
+<option value="negocio">💰 Negocio</option>
+<option value="freelance">💻 Freelance</option>
+<option value="otros">📦 Otros</option>
+</select>
+
+<select id="pISub">
+<option>Subcategoría</option>
+</select>
+
+<input id="pIMonto" type="number">
+<button onclick="guardarPresupuesto('Ingreso')">Agregar ingreso</button>
+
+<input id="pGConcepto" placeholder="Concepto">
+
+<select id="pGCategoria" onchange="subPresupuestoGasto()">
+<option value="">Categoría</option>
+<option value="comida">🍔 Comida</option>
+<option value="transporte">🚗 Transporte</option>
+<option value="hogar">🏠 Hogar</option>
+<option value="salud">💊 Salud</option>
+<option value="educacion">📚 Educación</option>
+<option value="ocio">🎬 Ocio</option>
+<option value="antojos">🍩 Antojos</option>
+<option value="deudas">💳 Deudas</option>
+</select>
+
+<select id="pGSub">
+<option>Subcategoría</option>
+</select>
+
+<input id="pGMonto" type="number">
+<button onclick="guardarPresupuesto('Gasto')">
+Agregar gasto
+</button>
+
+<br><br><br>
+
+<div id="tablaPresupuesto"
+style="
+background:white;
+padding:25px;
+border-radius:20px;
+color:#333;
+line-height:1.5;
+font-size:13px;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+"></div>
+
+<h3 id="totalPresupuesto"></h3>
+
+<button onclick="activarNoGasto()" style="width:100%;background:#e74c3c">
+🚫 No gastar hoy
+</button>
+</div>
+
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+<script>
+
+var firebaseConfig={
+apiKey: "AIzaSyB8iZYWKBMAQ41AZmv_DsK3kEaDMZSYyw8",
+  authDomain: "finanzas-99b2a.firebaseapp.com",
+  projectId: "finanzas-99b2a",
+  storageBucket: "finanzas-99b2a.firebasestorage.app",
+  messagingSenderId: "590050726452",
+  appId: "1:590050726452:web:70f57b06bb435c50d3b061",
+  measurementId: "G-2CF64MYY79"
+};
+
+firebase.initializeApp(firebaseConfig);
+var db=firebase.firestore();
+
+function animarSaldo(valorFinal){
+let actual = 0;
+let incremento = valorFinal / 30;
+
+let intervalo = setInterval(()=>{
+actual += incremento;
+
+if(actual >= valorFinal){
+actual = valorFinal;
+clearInterval(intervalo);
+}
+
+saldoTotal.innerHTML = Q(Number(actual.toFixed(2)));
+},20);
+}
+
+let noGastoHoy = false;
+
+function activarNoGasto(){
+noGastoHoy = true;
+alert("💜 Modo ahorro activado: hoy no gastarás");
+}
+
+function eliminar(col,id){
+db.collection(col).doc(id).delete();
+}
+
+function editar(col,id,concepto,monto){
+
+let nuevoConcepto = prompt("Editar concepto:", concepto);
+let nuevoMonto = prompt("Editar monto:", monto);
+
+if(nuevoConcepto!==null && nuevoMonto!==null){
+
+db.collection(col).doc(id).update({
+concepto:nuevoConcepto,
+monto:Number(nuevoMonto)
+});
+
+}
+
+}
+
+
+function Q(n){
+n = Number(n) || 0;
+return "Q"+n.toLocaleString("es-GT",{
+minimumFractionDigits:2,
+maximumFractionDigits:2
+});
+}
+
+/*
+const base={
+"COPECOM A":{total:41666.70,pagado:0},
+"COPECOM B":{total:54166.70,pagado:0},
+"Préstamo Banrual":{total:32727.57,pagado:0}
+};
+*/
+
+function loginApp(){
+if(pin.value==="2411"){
+loginBox.style.display="none";
+appBox.classList.remove("hidden");
+cargar();
+}else{
+alert("PIN incorrecto");
+}
+}
+
+pin.addEventListener("keydown", function(event){
+if(event.key==="Enter"){
+loginApp();
+}
+});
+
+function cerrarSesion(){
+appBox.classList.add("hidden");
+loginBox.style.display="block";
+}
+
+function ver(t){
+
+["ingresos","gastos","dashboard","presupuesto"]
+.forEach(x=>{
+let el = document.getElementById(x);
+el.classList.add("hidden");
+el.classList.remove("show");
+});
+
+let activo = document.getElementById(t);
+activo.classList.remove("hidden");
+activo.classList.add("fade");
+
+setTimeout(()=>{
+activo.classList.add("show");
+},10);
+
+document.querySelectorAll(".nav button")
+.forEach(b=>b.classList.remove("active"));
+
+event.target.classList.add("active");
+
+}
+
+function aplicarFiltro(){
+
+console.log("Filtro seleccionado:", filtroFecha.value);
+
+tablaIngresos.innerHTML="";
+tablaGastos.innerHTML="";
+alertas.innerHTML="";
+analisisGastos.innerHTML="";
+
+cargar();
+
+}
+
+function subIngreso(){
+let map={
+salario:["Sueldo","Bono"],
+negocio:["Ventas"],
+freelance:["Servicios"],
+otros:["Varios"]
+};
+iSub.innerHTML="";
+(map[iCategoria.value]||[]).forEach(x=>iSub.innerHTML+=`<option>${x}</option>`);
+}
+
+function subGasto(){
+let map={
+comida:["Supermercado","Restaurante","Varios"],
+transporte:["Taxi","Bus","Tuctuc"],
+hogar:["Alquiler","Luz","Internet","Gas","Otros"],
+salud:["Farmacia"],
+educacion:["Cursos"],
+ocio:["Cine"],
+
+antojos:[
+"Café",
+"Pizza",
+"Hamburguesas",
+"Helados",
+"Tacos",
+"Postres",
+"Crepas",
+"Shecas",
+"Chocolate",
+"Otros"
+],
+
+deudas:["Cuota"]
+};
+gSub.innerHTML="";
+(map[gCategoria.value]||[]).forEach(x=>gSub.innerHTML+=`<option>${x}</option>`);
+}
+
+function subPresupuestoIngreso(){
+let map={
+salario:["Sueldo","Bono"],
+negocio:["Ventas"],
+freelance:["Servicios"],
+otros:["Varios"]
+};
+
+pISub.innerHTML="";
+(map[pICategoria.value]||[]).forEach(x=>{
+pISub.innerHTML+=`<option>${x}</option>`;
+});
+}
+
+function subPresupuestoGasto(){
+let map={
+comida:["Supermercado","Restaurante","Delivery","Otros"],
+transporte:["Gasolina","Bus","Taxi","Tuctuc","Uber"],
+hogar:["Alquiler","Luz","Agua","Internet"],
+salud:["Farmacia","Consulta"],
+educacion:["Cursos","Libros"],
+ocio:["Cine","Viajes","Streaming"],
+
+deudas:["Cuota"]
+};
+
+pGSub.innerHTML="";
+(map[pGCategoria.value]||[]).forEach(x=>{
+pGSub.innerHTML+=`<option>${x}</option>`;
+});
+}
+
+function guardar(tipo){
+
+if(tipo==="Gasto" && noGastoHoy){
+alert("🚫 Hoy activaste no gastar");
+return;
+}
+
+let monto = Number(tipo==="Ingreso"?iMonto.value:gMonto.value);
+
+// guardar movimiento normal
+db.collection("movimientos").add({
+tipo,
+concepto: tipo==="Ingreso"
+? iConcepto.value
+: gConcepto.value,
+
+categoria: tipo==="Ingreso"
+? iCategoria.value
+: gCategoria.value,
+
+monto:monto,
+
+fecha: tipo==="Ingreso"
+? iFecha.value
+: gFecha.value,
+
+sub: tipo==="Ingreso"
+? iCategoria.value+"-"+iSub.value
+: gCategoria.value+"-"+gSub.value
+});
+
+// 💜 SOLO SI ES INGRESO → ahorro automático
+if(tipo==="Ingreso"){
+
+let ahorroCalc = monto * 0.10;
+
+db.collection("movimientos").add({
+tipo:"Ahorro",
+concepto:"Ahorro automático 💜",
+monto:ahorroCalc,
+fecha:iFecha.value,
+sub:"Ahorro"
+});
+}
+}
+
+function guardarPresupuesto(tipo){
+
+db.collection("presupuesto").add({
+tipo,
+concepto: tipo==="Ingreso"?pIConcepto.value:pGConcepto.value,
+categoria: tipo==="Ingreso"?pICategoria.value:pGCategoria.value,
+sub: tipo==="Ingreso"?pISub.value:pGSub.value,
+monto:Number(tipo==="Ingreso"?pIMonto.value:pGMonto.value)
+});
+
+}
+
+let vistaGastos = "fecha";
+
+let gastosPorCategoria = {};
+
+function cambiarVistaGastos(){
+
+    let tabla = document.getElementById("tablaGastosCompleta");
+    let titulo = document.getElementById("tituloTablaGastos");
+    let vista = document.getElementById("vistaCategorias");
+
+    if(vistaGastos === "fecha"){
+
+        vistaGastos = "categoria";
+
+        document.getElementById("btnVistaGastos").innerText =
+        "📅 Ver por fecha";
+
+        tabla.style.display = "none";
+        titulo.style.display = "none";
+
+        vista.innerHTML = `
+        <div style="
+            background:white;
+            padding:20px;
+            border-radius:15px;
+            margin:10px 0;
+            text-align:center;
+            font-size:18px;
+            color:#6c3483;
+            font-weight:bold;
+        ">
+            🚧 Vista por categorías en construcción 😎
+        </div>
+        `;
+
+    }else{
+
+        vistaGastos = "fecha";
+
+        document.getElementById("btnVistaGastos").innerText =
+        "👁️ Ver por categorías";
+
+        tabla.style.display = "table";
+        titulo.style.display = "block";
+
+        vista.innerHTML = "";
+
+    }
+
+}
+
+async function cargar(){
+
+db.collection("movimientos")
+.orderBy("fecha","desc")
+.onSnapshot(async snap=>{
+
+alertas.innerHTML = ""; // 🔥 LIMPIA ALERTAS
+analisisGastos.innerHTML = ""; // (si lo usas)
+
+let ing=0;
+let gast=0;
+let ahorroTotal=0;
+
+tablaIngresos.innerHTML="";
+tablaGastos.innerHTML="";
+
+gastosPorCategoria = {};
+let vistaCategorias =
+document.getElementById("vistaCategorias");
+
+vistaCategorias.innerHTML = "";
+alertas.innerHTML="";
+analisisGastos.innerHTML="";
+// deudaSelect.innerHTML="";
+
+// for(let n in base)
+// deudaSelect.innerHTML+=`<option>${n}</option>`;
+
+let categorias={};
+let gastosRealesCategoria = {};
+let ingresosMesActual = 0;
+let gastosMesActual = 0;
+
+let ingresosMesAnterior = 0;
+let gastosMesAnterior = 0;
+
+let cantidadMovimientos = 0;
+let gastoPromedio = 0;
+let gastosPorDia = {};
+
+let gastosPorDiaSemana = {
+"Domingo":0,
+"Lunes":0,
+"Martes":0,
+"Miércoles":0,
+"Jueves":0,
+"Viernes":0,
+"Sábado":0
+};
+
+let totalDiaMasCaro = 0;
+let diaMasCaro = "";
+
+let vecesCafe = 0;
+let vecesTransporte = 0;
+
+let gastoAntojos = 0;
+
+let presupuestoCat = {};
+let presupuestoAuto = {};
+let presupuestoManual = {};
+
+let filtro = document.getElementById("filtroFecha")?.value || "todos";
+
+let desde = document.getElementById("fechaDesde")?.value;
+let hasta = document.getElementById("fechaHasta")?.value;
+
+let textoBuscar =
+document.getElementById("buscarMovimiento")
+?.value
+.toLowerCase() || "";
+
+snap.forEach(doc=>{
+
+let d = doc.data();
+
+let fechaMov = new Date(d.fecha);
+
+let hoy = new Date();
+
+let mesActual = hoy.getMonth();
+let anioActual = hoy.getFullYear();
+
+let mesAnterior = mesActual===0 ? 11 : mesActual-1;
+let anioAnterior = mesActual===0 ? anioActual-1 : anioActual;
+
+if(textoBuscar){
+
+let textoCompleto = (
+(d.concepto || "") + " " +
+(d.sub || "") + " " +
+(d.nombre || "")
+).toLowerCase();
+
+if(!textoCompleto.includes(textoBuscar)){
+return;
+}
+
+}
+
+if(desde){
+if(fechaMov < new Date(desde)){
+return;
+}
+}
+
+if(hasta){
+if(fechaMov > new Date(hasta)){
+return;
+}
+}
+
+if(filtro==="mes"){
+if(
+fechaMov.getMonth() !== hoy.getMonth() ||
+fechaMov.getFullYear() !== hoy.getFullYear()
+){
+return;
+}
+}
+
+if(filtro==="anio"){
+if(fechaMov.getFullYear() !== hoy.getFullYear()){
+return;
+}
+}
+
+let m = Number(d.monto || 0);
+
+cantidadMovimientos++;
+
+if(
+(d.concepto || "").toLowerCase().includes("café") ||
+(d.concepto || "").toLowerCase().includes("cafe")
+){
+vecesCafe++;
+}
+
+if(
+(d.sub || "").toLowerCase().includes("bus") ||
+(d.sub || "").toLowerCase().includes("transporte")
+){
+vecesTransporte++;
+}
+
+if(d.tipo==="Gasto"){
+
+gastoPromedio += m;
+
+// 🍩 Detectar antojos nuevos y antiguos
+if(
+d.categoria === "antojos" ||
+(d.sub || "").startsWith("antojos-")
+){
+gastoAntojos += m;
+}
+
+let fecha = d.fecha || "Sin fecha";
+
+gastosPorDia[fecha] =
+(gastosPorDia[fecha] || 0) + m;
+
+let nombresDias = [
+"Domingo",
+"Lunes",
+"Martes",
+"Miércoles",
+"Jueves",
+"Viernes",
+"Sábado"
+];
+
+let diaSemana = nombresDias[fechaMov.getDay()];
+
+gastosPorDiaSemana[diaSemana] += m;
+
+}
+
+if(
+fechaMov.getMonth()===mesActual &&
+fechaMov.getFullYear()===anioActual
+){
+
+if(d.tipo==="Ingreso") ingresosMesActual += m;
+
+if(d.tipo==="Gasto") gastosMesActual += m;
+
+}
+
+if(
+fechaMov.getMonth()===mesAnterior &&
+fechaMov.getFullYear()===anioAnterior
+){
+
+if(d.tipo==="Ingreso") ingresosMesAnterior += m;
+
+if(d.tipo==="Gasto") gastosMesAnterior += m;
+
+}
+
+if(d.tipo==="Ingreso"){
+ing+=m;
+
+// 📊 TABLA
+tablaIngresos.innerHTML += `
+<tr>
+<td>${d.concepto}</td>
+<td>${d.sub}</td>
+<td>${Q(m)}</td>
+<td>${d.fecha}</td>
+<td>
+<button onclick="eliminar('movimientos','${doc.id}')">❌</button>
+<button onclick="editar('movimientos','${doc.id}','${d.concepto}',${m})">✏️</button>
+</td>
+</tr>
+`;
+}
+
+if(d.tipo==="Gasto"){
+gast+=m;
+
+// 📊 TABLA
+if(vistaGastos === "fecha"){
+
+tablaGastos.innerHTML += `
+<tr>
+<td>${d.concepto}</td>
+<td>${d.sub}</td>
+<td>${Q(m)}</td>
+<td>${d.fecha}</td>
+<td>
+<button onclick="eliminar('movimientos','${doc.id}')">❌</button>
+<button onclick="editar('movimientos','${doc.id}','${d.concepto}',${m})">✏️</button>
+</td>
+</tr>
+`;
+
+}
+
+let categoriaPrincipal =
+(d.sub || "otros")
+.split("-")[0]
+.toLowerCase();
+
+if(!gastosPorCategoria[categoriaPrincipal]){
+gastosPorCategoria[categoriaPrincipal] = [];
+}
+
+gastosPorCategoria[categoriaPrincipal].push({
+id: doc.id,
+concepto: d.concepto,
+sub: d.sub,
+monto: m,
+fecha: d.fecha
+});
+
+// 🧠 IA 
+let cat = d.sub || "Otros";
+categorias[cat] = (categorias[cat] || 0) + m;
+
+let catPrincipal =
+(d.sub || "otros")
+.split("-")[0]
+.toLowerCase();
+
+gastosRealesCategoria[catPrincipal] =
+(gastosRealesCategoria[catPrincipal] || 0) + m;
+
+}
+
+// ===== AHORRO =====
+if(d.tipo==="Ahorro"){
+ahorroTotal += m;
+}
+
+});
+
+// 💰 TOTAL INGRESOS EN TABLA
+tablaIngresos.innerHTML += `
+<tr style="background:#d4efdf;font-weight:bold">
+<td colspan="2">TOTAL</td>
+<td>${Q(ing)}</td>
+<td></td>
+</tr>
+`;
+
+// 💸 TOTAL GASTOS EN TABLA
+tablaGastos.innerHTML += `
+<tr style="background:#f9e79f;font-weight:bold">
+<td colspan="2">TOTAL</td>
+<td>${Q(gast)}</td>
+<td></td>
+</tr>
+`;
+
+// ===== PRESUPUESTO 💜 =====
+
+db.collection("presupuesto").onSnapshot(snap=>{
+
+tablaPresupuesto.innerHTML="";
+
+let totalIngreso = 0;
+let totalGasto = 0;
+presupuestoManual = {};
+let ingresosAgrupados = {};
+let gastosAgrupados = {};
+
+// 🔹 1. PRESUPUESTO MANUAL
+snap.forEach(doc=>{
+let d = doc.data();
+
+let cat = d.categoria || "Otros";
+presupuestoManual[cat] = (presupuestoManual[cat] || 0) + Number(d.monto||0);
+
+if(d.tipo==="Ingreso") totalIngreso += Number(d.monto||0);
+if(d.tipo==="Gasto") totalGasto += Number(d.monto||0);
+
+if(d.tipo==="Ingreso"){
+
+if(!ingresosAgrupados[cat]){
+ingresosAgrupados[cat] = [];
+}
+
+ingresosAgrupados[cat].push({
+concepto:d.concepto,
+monto:d.monto
+});
+
+}
+
+if(d.tipo==="Gasto"){
+
+if(!gastosAgrupados[cat]){
+gastosAgrupados[cat] = [];
+}
+
+gastosAgrupados[cat].push({
+concepto:d.concepto,
+monto:d.monto
+});
+
+}
+
+if(!presupuestoManual[d.tipo]){
+presupuestoManual[d.tipo] = {};
+}
+
+if(!presupuestoManual[d.tipo][cat]){
+presupuestoManual[d.tipo][cat] = [];
+}
+
+presupuestoManual[d.tipo][cat].push({
+id: doc.id,
+concepto: d.concepto,
+monto: Number(d.monto || 0)
+});
+});
+
+const iconos = {
+salario:"💼",
+negocio:"💰",
+freelance:"💻",
+otros:"📦",
+
+comida:"🍔",
+transporte:"🚌",
+hogar:"🏠",
+salud:"💊",
+educacion:"📚",
+ocio:"🎬",
+antojos:"🍩",
+deudas:"💳"
+};
+
+const nombresBonitos = {
+
+salario:"Salario",
+negocio:"Negocio",
+freelance:"Freelance",
+otros:"Otros",
+
+comida:"Comida",
+transporte:"Transporte",
+hogar:"Hogar",
+salud:"Salud",
+educacion:"Educación",
+ocio:"Ocio",
+antojos:"Antojos",
+deudas:"Deudas"
+
+};
+
+tablaPresupuesto.innerHTML = "";
+
+// INGRESOS
+tablaPresupuesto.innerHTML += `
+<h2 style="color:#6c3483; font-size:14px; margin-bottom:5px;">
+💰 INGRESOS
+</h2>
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━<br><br>
+`;
+
+const ordenIngresos = [
+"salario",
+"negocio",
+"freelance",
+"otros"
+];
+
+ordenIngresos.forEach(cat=>{
+
+if(!ingresosAgrupados[cat]) return;
+
+let subtotalCategoria =
+ingresosAgrupados[cat]
+.reduce((s,x)=>s + x.monto, 0);
+
+let porcentajeCategoria =
+totalIngreso > 0
+? (subtotalCategoria / totalIngreso * 100).toFixed(1)
+: 0;
+
+tablaPresupuesto.innerHTML += `
+<div style="
+font-weight:bold;
+margin-top:10px;
+color:#6c3483;
+">
+${iconos[cat]} ${nombresBonitos[cat]}
+(${Q(subtotalCategoria)} · ${porcentajeCategoria}%)
+</div>
+`;
+
+ingresosAgrupados[cat].forEach(item=>{
+
+tablaPresupuesto.innerHTML += `
+<div style="
+display:flex;
+justify-content:space-between;
+width:450px;
+padding-left:20px;
+margin:3px 0;
+">
+<span>• ${item.concepto}</span>
+<span>${Q(item.monto)}</span>
+</div>
+`;
+
+});
+
+tablaPresupuesto.innerHTML += "<br>";
+
+});
+
+// GASTOS
+tablaPresupuesto.innerHTML += `
+<h2 style="color:#6c3483; font-size:14px; margin-bottom:5px;">
+💸 GASTOS
+</h2>
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━<br><br>
+`;
+
+const ordenGastos = [
+"comida",
+"transporte",
+"hogar",
+"deudas",
+"antojos",
+"salud",
+"educacion",
+"ocio",
+"otros"
+];
+
+ordenGastos.forEach(cat=>{
+
+if(!gastosAgrupados[cat]) return;
+
+let subtotalCategoria =
+gastosAgrupados[cat]
+.reduce((s,x)=>s + x.monto, 0);
+
+let porcentajeCategoria =
+totalGasto > 0
+? (subtotalCategoria / totalGasto * 100).toFixed(1)
+: 0;
+
+tablaPresupuesto.innerHTML += `
+<div style="
+font-weight:bold;
+margin-top:10px;
+color:#6c3483;
+">
+${iconos[cat]} ${nombresBonitos[cat]}
+(${Q(subtotalCategoria)} · ${porcentajeCategoria}%)
+</div>
+`;
+
+gastosAgrupados[cat].forEach(item=>{
+
+tablaPresupuesto.innerHTML += `
+<div style="
+display:flex;
+justify-content:space-between;
+width:450px;
+padding-left:20px;
+margin:3px 0;
+">
+<span>• ${item.concepto}</span>
+<span>${Q(item.monto)}</span>
+</div>
+`;
+
+});
+
+tablaPresupuesto.innerHTML += "<br>";
+
+});
+
+// RESUMEN
+let saldoFinal = totalIngreso - totalGasto;
+
+let emojiSaldo = "💜";
+let colorSaldo = "#6c3483";
+
+if(saldoFinal > 0){
+emojiSaldo = "💚";
+colorSaldo = "green";
+}
+else if(saldoFinal < 0){
+emojiSaldo = "❤️";
+colorSaldo = "crimson";
+}
+
+tablaPresupuesto.innerHTML += `
+<div style="
+margin-top:30px;
+padding-top:20px;
+border-top:2px solid #ddd;
+width:450px;
+">
+
+<div>💰 <b>Ingresos:</b> ${Q(totalIngreso)}</div>
+
+<div>💸 <b>Gastos:</b> ${Q(totalGasto)}</div>
+
+<div style="
+font-weight:bold;
+color:${colorSaldo};
+margin-top:8px;
+font-size:18px;
+">
+${emojiSaldo} Saldo: ${Q(saldoFinal)}
+</div>
+
+</div>
+`;
+
+// 🔹 2. PRESUPUESTO AUTOMÁTICO
+for(let cat in presupuestoAuto){
+
+tablaPresupuesto.innerHTML += `
+<tr style="background:#e8f8f5">
+<td>🔄 Gasto real</td>
+<td>${cat}</td>
+<td>Movimientos</td>
+<td>${Q(presupuestoAuto[cat])}</td>
+<td>-</td>
+<td>Auto</td>
+</tr>`;
+}
+
+tablaPresupuesto.innerHTML += `
+<br>
+<h3 style="
+color:#6c3483;
+font-size:16px;
+">
+🥈 Presupuesto vs gasto real
+</h3>
+`;
+
+ordenGastos.forEach(cat=>{
+
+if(!gastosAgrupados[cat]) return;
+
+let presupuestado =
+gastosAgrupados[cat]
+.reduce((s,x)=>s+x.monto,0);
+
+let gastado =
+gastosRealesCategoria[cat] || 0;
+
+let diferencia = presupuestado - gastado;
+
+let mensaje = "";
+let color = "";
+
+if(diferencia >= 0){
+
+mensaje =
+`Te quedan: ${Q(diferencia)} ✅`;
+
+color = "#27ae60";
+
+}else{
+
+mensaje =
+`Te pasaste: ${Q(Math.abs(diferencia))} ⚠️`;
+
+color = "#c0392b";
+
+}
+
+tablaPresupuesto.innerHTML += `
+<div style="
+margin-bottom:12px;
+padding:10px;
+background:#faf5ff;
+border-radius:12px;
+">
+
+<b>${iconos[cat]} ${nombresBonitos[cat]}</b><br>
+
+Presupuestado:
+${Q(presupuestado)}<br>
+
+Gastado:
+${Q(gastado)}<br>
+
+<span style="
+color:${color};
+font-weight:bold;
+">
+${mensaje}
+</span>
+
+</div>
+`;
+
+});
+
+// 🔹 3. SALDO
+totalPresupuesto.innerHTML = "💜 Saldo presupuestado: " + Q(totalIngreso - totalGasto);
+
+// 🔹 4. IA COMPARACIÓN
+alertas.innerHTML += "<br><b>🧠 Comparación inteligente</b><br>";
+
+for(let cat in presupuestoManual){
+
+let plan = presupuestoManual[cat] || 0;
+let real = presupuestoAuto[cat] || 0;
+let diff = real - plan;
+
+if(plan === 0) continue;
+
+if(diff > 0){
+alertas.innerHTML += `
+⚠️ Te pasaste en <b>${cat}</b> por ${Q(diff)}<br>
+💡 Reduce un ${(diff/plan*100).toFixed(0)}%<br><br>
+`;
+}else{
+alertas.innerHTML += `
+✅ Vas bien en <b>${cat}</b><br>
+💰 Ahorraste ${Q(Math.abs(diff))}<br><br>
+`;
+}
+
+}
+
+});
+
+// RESUMEN
+// 💜 saldo disponible (lo que puedes usar)
+let disponible = Number((ing - gast - ahorroTotal).toFixed(2));
+
+saldoDisponible.innerHTML = Q(disponible);
+
+// 💜 color inteligente
+if(disponible > 0){
+saldoDisponible.style.color = "#2ecc71"; // verde
+}else{
+saldoDisponible.style.color = "#e74c3c"; // rojo
+}
+
+// 🏦 saldo total (todo tu dinero)
+let saldo = Number((ing - gast).toFixed(2));
+
+// 💸 animación bancaria
+animarSaldo(saldo);
+
+// 💚❤️ color inteligente
+if(saldo >= 0){
+saldoTotal.style.color = "#00e676"; // verde 💚
+}else{
+saldoTotal.style.color = "#ff5252"; // rojo ❤️
+}
+
+totalIngresos.innerHTML=Q(ing.toFixed(2));
+totalGastos.innerHTML=Q(gast.toFixed(2));
+ahorroBox.innerHTML="Ahorro: "+Q(Number(ahorroTotal.toFixed(2)));
+
+// 🧠 ALERTA PREMIUM
+if(disponible < 0){
+alertas.innerHTML += "🚨 Estás en números rojos<br>";
+}
+
+if(disponible > 0 && disponible < ing*0.2){
+alertas.innerHTML += "⚠️ Te queda poco dinero disponible<br>";
+}
+
+if(disponible > ing*0.5){
+alertas.innerHTML += "💜 Excelente control financiero<br>";
+}
+
+// ===== IA INTELIGENTE PRO 💜 =====
+
+let rankingGastos = Object.entries(categorias)
+.sort((a,b)=>b[1]-a[1]);
+
+let categoriaFavorita = "";
+
+if(rankingGastos.length > 0){
+categoriaFavorita = rankingGastos[0][0];
+}
+
+// 💸 ¿EN QUÉ SE ME FUE EL DINERO?
+
+let top3 = rankingGastos.slice(0,3);
+
+enQueSeFue.innerHTML = `
+<hr>
+<h3>💸 ¿En qué se me fue el dinero?</h3>
+`;
+
+top3.forEach((item,index)=>{
+
+let porcentaje =
+gast > 0
+? (item[1]/gast*100).toFixed(1)
+: 0;
+
+let medalla =
+index===0 ? "🥇" :
+index===1 ? "🥈" :
+"🥉";
+
+enQueSeFue.innerHTML += `
+${medalla} ${item[0]}:
+<b>${Q(item[1])}</b>
+(${porcentaje}%)
+<br>
+`;
+
+});
+
+if(top3.length>0){
+
+let principal = top3[0];
+
+let ahorroPosible =
+principal[1] * 0.20;
+
+enQueSeFue.innerHTML += `
+<br>
+🧠 Si redujeras un 20% en
+<b>${principal[0]}</b>,
+tendrías <b>${Q(ahorroPosible)}</b>
+adicionales este mes.
+`;
+}
+
+// 🕵️ DETECTIVE FINANCIERO
+
+for(let fecha in gastosPorDia){
+
+if(gastosPorDia[fecha] > totalDiaMasCaro){
+
+totalDiaMasCaro = gastosPorDia[fecha];
+diaMasCaro = fecha;
+
+}
+
+}
+
+let diaMasGaston = "";
+let totalDiaSemana = 0;
+
+for(let dia in gastosPorDiaSemana){
+
+if(gastosPorDiaSemana[dia] > totalDiaSemana){
+
+totalDiaSemana = gastosPorDiaSemana[dia];
+diaMasGaston = dia;
+
+}
+
+}
+
+let promedioDiario =
+gast > 0
+? (gast / 30).toFixed(2)
+: 0;
+
+detectiveFinanciero.innerHTML = `
+<hr>
+
+<h3>🕵️ Detective financiero</h3>
+
+📄 Movimientos registrados:
+<b>${cantidadMovimientos}</b><br><br>
+
+☕ Compraste café:
+<b>${vecesCafe}</b> veces<br><br>
+
+🚌 Usaste transporte:
+<b>${vecesTransporte}</b> veces<br><br>
+
+🍔 Tu categoría favorita:
+<b>${categoriaFavorita}</b><br><br>
+
+📅 Tu día más gastón:
+<b>${diaMasGaston}</b><br><br>
+
+💸 Has gastado en antojos: <b>${Q(gastoAntojos)}</b><br>
+
+⚠️ Los antojos representan
+<b>${gast > 0 ? ((gastoAntojos/gast)*100).toFixed(1) : 0}%</b>
+de tus gastos<br>
+
+💡 Si redujeras los antojos un 20%, ahorrarías
+<b>${Q(gastoAntojos*0.2)}</b> al mes<br>
+
+💰 Gasto promedio diario:
+<b>${Q(promedioDiario)}</b><br><br>
+
+📅 Día más caro:
+<b>${diaMasCaro}</b><br>
+
+💸 Gastaste:
+<b>${Q(totalDiaMasCaro)}</b>
+`;
+
+// 🔥 GRÁFICO PRO
+let labels = rankingGastos.map(x=>x[0]);
+let data = rankingGastos.map(x=>Number(x[1].toFixed(2)));
+
+if(window.miGrafico) window.miGrafico.destroy();
+
+let ctx = document.getElementById("graficoGastos").getContext("2d");
+
+window.miGrafico = new Chart(ctx,{
+type:"doughnut",
+data:{
+labels:labels,
+datasets:[{
+data:data
+}]
+},
+options:{
+responsive:true,
+maintainAspectRatio:false
+}
+});
+
+analisisGastos.innerHTML = "";
+
+comparacionMensual.innerHTML = `
+<hr>
+
+<h3>📈 Comparación mensual</h3>
+
+💰 Este mes: ${Q(ingresosMesActual)} ingresos<br>
+💸 Este mes: ${Q(gastosMesActual)} gastos<br><br>
+
+💰 Mes anterior: ${Q(ingresosMesAnterior)} ingresos<br>
+💸 Mes anterior: ${Q(gastosMesAnterior)} gastos<br><br>
+
+${gastosMesActual < gastosMesAnterior
+? "🎉 Gastaste menos que el mes pasado"
+: "⚠️ Gastaste más que el mes pasado"}
+`;
+
+// 🧠 1. MAYOR GASTO
+if(rankingGastos.length > 0){
+
+let top = rankingGastos[0];
+
+analisisGastos.innerHTML += `
+💸 Mayor gasto: <b>${top[0]}</b> → ${Q(top[1])}<br>
+`;
+
+// porcentaje
+let porcentaje = gast > 0 ? (top[1]/gast)*100 : 0;
+
+alertas.innerHTML += `
+📊 ${top[0]} representa el <b>${porcentaje.toFixed(1)}%</b> de tus gastos<br>
+`;
+
+// ahorro posible
+let ahorroPosible = top[1]*0.1;
+
+alertas.innerHTML += `
+💡 Si reduces un 10% en ${top[0]}, ahorrarías <b>${Q(ahorroPosible)}</b><br>
+`;
+
+}
+
+// 🧠 2. CONTROL GENERAL
+if(gast < ing){
+alertas.innerHTML += `💜 Vas bien, estás gastando menos de lo que ganas<br>`;
+}
+
+if(gast > ing){
+alertas.innerHTML += `🚨 Estás gastando más de lo que ganas<br>`;
+}
+
+// 🧠 3. CONCENTRACIÓN DE GASTO
+if(rankingGastos.length > 0 && rankingGastos[0][1] > gast*0.4){
+alertas.innerHTML += `⚠️ Estás concentrando mucho gasto en una sola categoría<br>`;
+}
+
+// 🧠 4. PREDICCIÓN
+let gastoDiario = gast/30;
+let diasRestantes = gastoDiario > 0 ? Math.floor((ing-gast)/gastoDiario) : 0;
+
+alertas.innerHTML += `🔮 Te alcanza para ${diasRestantes} días<br>`;
+
+if(diasRestantes <= 5 && diasRestantes > 0){
+alertas.innerHTML += `⚠️ Te estás quedando sin dinero<br>`;
+}
+
+if(diasRestantes <= 0){
+alertas.innerHTML += `🚨 Ya estás en déficit<br>`;
+}
+
+if(diasRestantes <= 3 && diasRestantes > 0){
+alertas.innerHTML += "🚨 Nivel crítico: ajusta gastos YA<br>";
+}
+
+// 🧠 5. COMPARACIÓN MENSUAL
+let mesActual = new Date().getMonth();
+let mesAnterior = mesActual === 0 ? 11 : mesActual - 1;
+
+Object.values(categorias).forEach(v=>{
+gastosMesActual += v;
+});
+
+if(gastosMesAnterior > 0){
+let cambio = gastosMesActual - gastosMesAnterior;
+let porcentajeCambio = (cambio / gastosMesAnterior) * 100;
+
+alertas.innerHTML += cambio > 0
+? `📈 Este mes gastaste <b>${porcentajeCambio.toFixed(1)}%</b> más<br>`
+: `📉 Este mes gastaste <b>${Math.abs(porcentajeCambio).toFixed(1)}%</b> menos 💜<br>`;
+}
+
+// 🧠 6. MENSAJE HUMANO
+if(gast > 0){
+alertas.innerHTML += `🧠 Consejo: pequeños ajustes diarios hacen grandes cambios 💜`;
+}
+
+// ===== CONTROL PRESUPUESTO VS REAL 💜 =====
+
+alertas.innerHTML += "<br><b>📊 Control de presupuesto:</b><br>";
+
+for(let cat in categorias){
+
+let gastoReal = categorias[cat];
+let presupuesto = presupuestoCat[cat] || 0;
+
+if(presupuesto > 0){
+
+let diferencia = gastoReal - presupuesto;
+
+if(diferencia > 0){
+alertas.innerHTML += `🚨 Te pasaste en <b>${cat}</b> por ${Q(diferencia)}<br>`;
+}else{
+alertas.innerHTML += `✅ Bien en <b>${cat}</b><br>`;
+}
+
+}
+
+}
+
+alertas.innerHTML += "🧠 IA activa 💜<br>";
+
+});
+
+}
+
+function exportarExcel(){
+
+db.collection("movimientos")
+.orderBy("fecha","desc")
+.get()
+.then((snap)=>{
+
+let csv =
+"Tipo,Concepto,Categoria,Monto,Fecha\n";
+
+snap.forEach(doc=>{
+
+let d = doc.data();
+
+csv +=
+`${d.tipo || ""},` +
+`${d.concepto || d.nombre || ""},` +
+`${d.sub || ""},` +
+`${d.monto || 0},` +
+`${d.fecha || ""}\n`;
+
+});
+
+let blob = new Blob(
+[csv],
+{type:"text/csv;charset=utf-8;"}
+);
+
+let link = document.createElement("a");
+
+link.href = URL.createObjectURL(blob);
+
+link.download =
+"Finanzas_" +
+new Date().toISOString().slice(0,10) +
+".csv";
+
+link.click();
+
+});
+
+}
+
+</script>
+
+</body>
+</html>
+
+
+
+
+
